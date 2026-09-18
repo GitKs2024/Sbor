@@ -33,7 +33,7 @@
             border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 24px;
             width: 100%;
-            max-width: 920px;
+            max-width: 940px;
             padding: 40px 32px;
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
         }
@@ -41,7 +41,7 @@
         /* 1. Заголовок по центру сверху */
         .hero-header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 36px;
         }
 
         .hero-badge {
@@ -67,12 +67,12 @@
         /* Сетка: левая и правая части */
         .hero-grid {
             display: grid;
-            grid-template-columns: 320px 1fr;
+            grid-template-columns: 340px 1fr;
             gap: 40px;
-            align-items: center;
+            align-items: start;
         }
 
-        /* ЛЕВАЯ КОЛОНКА: QR и ссылка */
+        /* ЛЕВАЯ КОЛОНКА */
         .left-col {
             display: flex;
             flex-direction: column;
@@ -88,13 +88,13 @@
             background: #ffffff;
             padding: 12px;
             border-radius: 16px;
-            width: 220px;
-            height: 220px;
+            width: 200px;
+            height: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
+            margin-bottom: 12px;
         }
 
         .qr-wrapper img {
@@ -105,13 +105,13 @@
         }
 
         .qr-hint {
-            font-size: 12px;
+            font-size: 11px;
             color: #a3b8b0;
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
 
-        /* 3. Ссылка под QR-кодом */
+        /* 3. Кнопка под QR-кодом */
         .pay-link-btn {
             display: inline-flex;
             align-items: center;
@@ -120,31 +120,119 @@
             background: linear-gradient(135deg, #245e45, #184732);
             color: #cbe0d8;
             text-decoration: none;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
-            padding: 14px 20px;
+            padding: 12px 16px;
             border-radius: 12px;
             transition: all 0.2s ease;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
         }
 
         .pay-link-btn:hover {
             background: linear-gradient(135deg, #2c7254, #1e573e);
-            color: #e2f0ea;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+            color: #ffffff;
         }
 
-        /* ПРАВАЯ КОЛОНКА: Описание и сумма */
+        /* Разделитель "ИЛИ" */
+        .divider-or {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 16px;
+            color: #7d968d;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .divider-or::before, .divider-or::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .divider-or:not(:empty)::before { margin-right: 10px; }
+        .divider-or:not(:empty)::after { margin-left: 10px; }
+
+        /* БЛОК ПЕРЕВОДА ПО НОМЕРУ ТЕЛЕФОНА */
+        .manual-pay-box {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            padding: 14px 16px;
+        }
+
+        .manual-pay-title {
+            font-size: 12px;
+            color: #a3b8b0;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .phone-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 8px;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+        }
+
+        .phone-number {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+
+        .copy-btn {
+            background: #2a634b;
+            color: #ffffff;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .copy-btn:hover {
+            background: #367d5e;
+        }
+
+        .copy-btn.copied {
+            background: #27ae60;
+        }
+
+        .bank-info {
+            font-size: 12px;
+            color: #d8e6df;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .bank-info strong {
+            color: #f7d570;
+            font-weight: 600;
+        }
+
+        /* ПРАВАЯ КОЛОНКА */
         .right-col {
             display: flex;
             flex-direction: column;
             justify-content: center;
+            padding-top: 10px;
         }
 
-        /* 5. Блок суммы */
         .amount-section {
             margin-bottom: 24px;
         }
@@ -168,7 +256,6 @@
             font-weight: 500;
         }
 
-        /* Мелкая подпись про возможность перевести больше */
         .amount-subnote {
             font-size: 13px;
             color: #8fa89e;
@@ -176,7 +263,6 @@
             font-style: italic;
         }
 
-        /* 4. Описание на что сбор */
         .description-text {
             font-size: 16px;
             line-height: 1.6;
@@ -188,7 +274,6 @@
             margin-bottom: 12px;
         }
 
-        /* Блок с важным предупреждением о пустом сообщении */
         .warning-box {
             background: rgba(235, 87, 87, 0.12);
             border-left: 4px solid #eb5757;
@@ -205,20 +290,17 @@
             margin-bottom: 4px;
         }
 
-        /* Ссылка на организатора */
         .organizer-link {
             color: #ffffff;
             text-decoration: underline;
             text-underline-offset: 3px;
             font-weight: 600;
-            transition: color 0.2s ease;
         }
 
         .organizer-link:hover {
             color: #f7d570;
         }
 
-        /* Адаптив для экранов смартфонов */
         @media (max-width: 768px) {
             .hero-card {
                 padding: 24px 16px;
@@ -240,6 +322,7 @@
             .right-col {
                 order: 1;
                 text-align: center;
+                padding-top: 0;
             }
 
             .amount-box {
@@ -256,7 +339,7 @@
 
     <section class="hero-card">
         
-        <!-- 1. Заголовок по центру сверху -->
+        <!-- Заголовок -->
         <header class="hero-header">
             <span class="hero-badge">🎄 Встреча 2026</span>
             <h1 class="hero-title">Сбор на Праздничный Розыгрыш Подарков</h1>
@@ -264,23 +347,40 @@
 
         <div class="hero-grid">
             
-            <!-- ЛЕВАЯ ЧАСТЬ: QR-код и ссылка под ним -->
+            <!-- ЛЕВАЯ ЧАСТЬ: QR, ссылка и блок с телефоном -->
             <div class="left-col">
-                <!-- 2. Картинка QR-кода -->
+                <!-- QR-код -->
                 <div class="qr-wrapper">
                     <img src="qr.png" alt="QR-код для перевода">
                 </div>
-                <div class="qr-hint">Отсканируйте камерой телефона или в приложении банка</div>
+                <div class="qr-hint">Для клиентов ВТБ, Альфа-Банка, Газпромбанка</div>
                 
-                <!-- 3. Ссылка на перевод под QR-кодом -->
+                <!-- Ссылка СБП -->
                 <a href="https://c2c.cbrpay.ru/BS1I005UBV9KLMI090CR7P9Q0I1EDSHC" target="_blank" class="pay-link-btn">
-                    Оплатить по прямой ссылке
+                    Оплатить по QR / ссылке СБП
                 </a>
+
+                <!-- Разделитель -->
+                <div class="divider-or">для Сбера, Райффайзена и др.</div>
+
+                <!-- БЛОК С НОМЕРОМ ТЕЛЕФОНА И БАНКОМ -->
+                <div class="manual-pay-box">
+                    <div class="manual-pay-title">Перевод через СБП по номеру:</div>
+                    
+                    <div class="phone-row">
+                        <!-- ВСТАВЬТЕ ВАШ НОМЕР ТЕЛЕФОНА НИЖЕ: -->
+                        <span class="phone-number" id="phoneText">+7 (913) 866-43-86</span>
+                        <button type="button" class="copy-btn" id="copyBtn" onclick="copyPhone()">Скопировать</button>
+                    </div>
+
+                    <div class="bank-info">
+                        Приоритетный банк: <strong>Газпромбанк</strong>
+                    </div>
+                </div>
             </div>
 
             <!-- ПРАВАЯ ЧАСТЬ: Сумма и Описание -->
             <div class="right-col">
-                <!-- 5. Сумма перевода + подпись -->
                 <div class="amount-section">
                     <div class="amount-box">
                         <span class="amount-value">500 ₽</span>
@@ -289,13 +389,11 @@
                     <div class="amount-subnote">При желании можно перевести и больше — всё пойдет на подарки и атмосферу праздника</div>
                 </div>
 
-                <!-- 4. Описание на что сбор -->
                 <div class="description-text">
                     <p>Праздничный беспроигрышный розыгрыш — общая и обязательная часть нашей встречи, создающая новогоднее настроение каждому!</p>
                     <p>В этом году вам не нужно искать и приносить подарки — организаторы закупают всё централизованно. Каждый гарантированно уйдёт с приятным презентом к Новому году. 🎁</p>
                 </div>
 
-                <!-- Блок-напоминание о пустом комментарии со ссылкой на организатора -->
                 <div class="warning-box">
                     <strong>⚠ Важное правило при переводе:</strong>
                     В поле «Сообщение / Комментарий получателю» <u>ничего не пишите</u> (оставьте его полностью пустым). После перевода отправьте скриншот чека в ЛС <a href="https://vk.ru/pusha_pusha" target="_blank" class="organizer-link">организатору</a>!
@@ -305,6 +403,27 @@
         </div>
 
     </section>
+
+    <!-- Скрипт для мгновенного копирования номера телефона -->
+    <script>
+        function copyPhone() {
+            // ВСТАВЬТЕ СЮДА ВАШ НОМЕР БЕЗ ПРОБЕЛОВ (только цифры и плюс):
+            const phoneNumber = "+799138664386"; 
+            
+            navigator.clipboard.writeText(phoneNumber).then(() => {
+                const btn = document.getElementById('copyBtn');
+                btn.textContent = 'Скопировано! ✓';
+                btn.classList.add('copied');
+                
+                setTimeout(() => {
+                    btn.textContent = 'Скопировать';
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Ошибка копирования: ', err);
+            });
+        }
+    </script>
 
 </body>
 </html>
