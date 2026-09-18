@@ -128,7 +128,7 @@
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
         .pay-link-btn:hover {
@@ -136,7 +136,7 @@
             color: #ffffff;
         }
 
-        /* Разделитель "ИЛИ" */
+        /* Разделитель */
         .divider-or {
             width: 100%;
             display: flex;
@@ -170,54 +170,92 @@
         .manual-pay-title {
             font-size: 12px;
             color: #a3b8b0;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             line-height: 1.4;
+            text-align: center;
         }
 
-        .phone-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        /* Номер строго в одну линию */
+        .phone-display-row {
             background: rgba(255, 255, 255, 0.06);
             border-radius: 8px;
-            padding: 8px 12px;
-            margin-bottom: 8px;
+            padding: 10px 8px;
+            margin-bottom: 10px;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .phone-number {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
             color: #ffffff;
+            user-select: all;
         }
 
-        .copy-btn {
-            background: #2a634b;
-            color: #ffffff;
+        .hidden-digits {
+            color: #e5c158;
+            letter-spacing: 1.5px;
+        }
+
+        /* Кнопки в один ряд под номером */
+        .phone-actions-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .action-btn {
             border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 9px 8px;
+            border-radius: 8px;
             font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            text-align: center;
+        }
+
+        /* Кнопка раскрытия */
+        .toggle-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #dbebe3;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.18);
+            color: #ffffff;
+        }
+
+        /* Кнопка копирования */
+        .copy-btn {
+            background: #245e45;
+            color: #ffffff;
         }
 
         .copy-btn:hover {
-            background: #367d5e;
+            background: #2e7a5a;
         }
 
-        .copy-btn.copied {
-            background: #27ae60;
+        .action-btn.active-success {
+            background: #27ae60 !important;
+            color: #ffffff !important;
+            border-color: #27ae60 !important;
         }
 
         .bank-info {
             font-size: 12px;
             color: #d8e6df;
-            display: flex;
-            align-items: center;
-            gap: 6px;
+            text-align: center;
         }
 
         .bank-info strong {
@@ -347,7 +385,7 @@
 
         <div class="hero-grid">
             
-            <!-- ЛЕВАЯ ЧАСТЬ: QR, ссылка и блок с телефоном -->
+            <!-- ЛЕВАЯ ЧАСТЬ -->
             <div class="left-col">
                 <!-- QR-код -->
                 <div class="qr-wrapper">
@@ -363,14 +401,25 @@
                 <!-- Разделитель -->
                 <div class="divider-or">для Сбера, Райффайзена и др.</div>
 
-                <!-- БЛОК С НОМЕРОМ ТЕЛЕФОНА И БАНКОМ -->
+                <!-- БЛОК С НОМЕРОМ ТЕЛЕФОНА -->
                 <div class="manual-pay-box">
                     <div class="manual-pay-title">Перевод через СБП по номеру:</div>
                     
-                    <div class="phone-row">
-                        <!-- ВСТАВЬТЕ ВАШ НОМЕР ТЕЛЕФОНА НИЖЕ: -->
-                        <span class="phone-number" id="phoneText">+7 (913) 866-43-86</span>
-                        <button type="button" class="copy-btn" id="copyBtn" onclick="copyPhone()">Скопировать</button>
+                    <!-- Строка с номером в одну линию -->
+                    <div class="phone-display-row">
+                        <span class="phone-number" id="phoneDisplay">
+                            <span id="phonePrefix">+7 (9XX) XXX-</span><span id="phoneTail" class="hidden-digits">••••</span>
+                        </span>
+                    </div>
+
+                    <!-- Кнопки в один ряд под номером -->
+                    <div class="phone-actions-row">
+                        <button type="button" class="action-btn toggle-btn" id="toggleBtn" onclick="togglePhone()">
+                            Показать
+                        </button>
+                        <button type="button" class="action-btn copy-btn" id="copyBtn" onclick="copyOnly()">
+                            Скопировать
+                        </button>
                     </div>
 
                     <div class="bank-info">
@@ -379,7 +428,7 @@
                 </div>
             </div>
 
-            <!-- ПРАВАЯ ЧАСТЬ: Сумма и Описание -->
+            <!-- ПРАВАЯ ЧАСТЬ -->
             <div class="right-col">
                 <div class="amount-section">
                     <div class="amount-box">
@@ -404,24 +453,80 @@
 
     </section>
 
-    <!-- Скрипт для мгновенного копирования номера телефона -->
+    <!-- Скрипт логики показа и копирования -->
     <script>
-        function copyPhone() {
-            // ВСТАВЬТЕ СЮДА ВАШ НОМЕР БЕЗ ПРОБЕЛОВ (только цифры и плюс):
-            const phoneNumber = "+799138664386"; 
-            
-            navigator.clipboard.writeText(phoneNumber).then(() => {
-                const btn = document.getElementById('copyBtn');
-                btn.textContent = 'Скопировано! ✓';
-                btn.classList.add('copied');
+        // ==========================================
+        // НАСТРОЙКА ВАШЕГО НОМЕРА (укажите свои данные):
+        // ==========================================
+        const PHONE_PREFIX = "+7 (913) 866-"; // Начало номера с кодом
+        const PHONE_REAL_TAIL = "43-86";      // Реальные последние 4 цифры (через дефис)
+        const RAW_PHONE = "+79138664386";      // Полный номер для буфера обмена (только цифры и плюс)
+        // ==========================================
+
+        const MASKED_TAIL = "••••";
+        let isRevealed = false;
+
+        // При загрузке страницы устанавливаем видимую часть
+        document.getElementById('phonePrefix').textContent = PHONE_PREFIX;
+        document.getElementById('phoneTail').textContent = MASKED_TAIL;
+
+        // Функция кнопки "Показать / Скрыть"
+        function togglePhone() {
+            const tailEl = document.getElementById('phoneTail');
+            const toggleBtn = document.getElementById('toggleBtn');
+
+            if (!isRevealed) {
+                // Раскрываем номер
+                tailEl.textContent = PHONE_REAL_TAIL;
+                tailEl.classList.remove('hidden-digits');
+                toggleBtn.textContent = 'Скрыть';
+                isRevealed = true;
+
+                // Сразу автоматически копируем при раскрытии
+                copyToClipboard(RAW_PHONE);
                 
+                // Подсвечиваем кнопку "Скопировать", показывая, что номер уже в буфере
+                const copyBtn = document.getElementById('copyBtn');
+                copyBtn.textContent = 'Скопировано! ✓';
+                copyBtn.classList.add('active-success');
                 setTimeout(() => {
-                    btn.textContent = 'Скопировать';
-                    btn.classList.remove('copied');
+                    copyBtn.textContent = 'Скопировать';
+                    copyBtn.classList.remove('active-success');
                 }, 2000);
-            }).catch(err => {
-                console.error('Ошибка копирования: ', err);
-            });
+
+            } else {
+                // Скрываем обратно
+                tailEl.textContent = MASKED_TAIL;
+                tailEl.classList.add('hidden-digits');
+                toggleBtn.textContent = 'Показать';
+                isRevealed = false;
+            }
+        }
+
+        // Функция отдельной кнопки "Скопировать"
+        function copyOnly() {
+            copyToClipboard(RAW_PHONE);
+            const copyBtn = document.getElementById('copyBtn');
+            copyBtn.textContent = 'Скопировано! ✓';
+            copyBtn.classList.add('active-success');
+            setTimeout(() => {
+                copyBtn.textContent = 'Скопировать';
+                copyBtn.classList.remove('active-success');
+            }, 2000);
+        }
+
+        // Универсальное копирование в буфер обмена
+        function copyToClipboard(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text);
+            } else {
+                const tempInput = document.createElement('input');
+                tempInput.value = text;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+            }
         }
     </script>
 
